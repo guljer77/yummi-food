@@ -4,7 +4,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa";
 
 function Card() {
-  return <div className="bg-gray-100 shadow-md p-5">
+  return <div className="bg-gray-100 shadow-md p-5 lg:mb-0 mb-5">
     <img src={Image} alt="" />
     <h4 className="text-[18px] font-semibold py-2">Blue Lagoon Cocktail</h4>
     <p className="text-[16px] font-bold"><del>$ 20.00</del> $15.00</p>
