@@ -5,9 +5,18 @@ import { FaFacebookF, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 import Logo from "../../assets/light-logo.svg";
 import { IoClose } from "react-icons/io5";
 import Container from "../Container";
+import { useAuth } from "../../Hooks/Auth/useAuth";
 
 function Header() {
   const [menu, setMenu] = useState(false);
+  const { user, logOutUser } = useAuth();
+  const logoutFn = () => {
+    logOutUser()
+      .then(() => {})
+      .catch(error => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <div className="py-[12px] bg-primary">
@@ -61,23 +70,61 @@ function Header() {
           </div>
           {menu && (
             <div className="z-50 top-0 fixed h-full right-0 bg-gray-900 w-[300px]">
-              <div onClick={()=> setMenu(!menu)} className="flex pb-5 items-center justify-end text-white mt-5 mr-5 text-[26px]">
+              <div
+                onClick={() => setMenu(!menu)}
+                className="flex pb-5 items-center justify-end text-white mt-5 mr-5 text-[26px]"
+              >
                 <IoClose />
               </div>
               <div>
                 <ul>
                   <li className="block w-[100%] text-[18px] font-semibold text-white">
-                    <NavLink to="/" className={({isActive})=> isActive ? "bg-primary w-[100%] block":""}><span className="pl-5 py-3 block">Home</span></NavLink>
+                    <NavLink
+                      to="/"
+                      className={({ isActive }) =>
+                        isActive ? "bg-primary w-[100%] block" : ""
+                      }
+                    >
+                      <span className="pl-5 py-3 block">Home</span>
+                    </NavLink>
                   </li>
                   <li className="block text-[18px] font-semibold text-white">
-                    <NavLink to="/menu" className={({isActive})=> isActive ? "bg-primary w-[100%] block":""}><span className="pl-5 py-3 block">Menu</span></NavLink>
+                    <NavLink
+                      to="/menu"
+                      className={({ isActive }) =>
+                        isActive ? "bg-primary w-[100%] block" : ""
+                      }
+                    >
+                      <span className="pl-5 py-3 block">Menu</span>
+                    </NavLink>
                   </li>
                   <li className="block text-[18px] font-semibold text-white">
-                    <NavLink to="/gallery" className={({isActive})=> isActive ? "bg-primary w-[100%] block":""}><span className="pl-5 py-3 block">Gallery</span></NavLink>
+                    <NavLink
+                      to="/gallery"
+                      className={({ isActive }) =>
+                        isActive ? "bg-primary w-[100%] block" : ""
+                      }
+                    >
+                      <span className="pl-5 py-3 block">Gallery</span>
+                    </NavLink>
                   </li>
                   <li className="block text-[18px] font-semibold text-white">
-                    <NavLink to="/blog" className={({isActive})=> isActive ? "bg-primary w-[100%] block":""}><span className="pl-5 py-3 block">Blog</span></NavLink>
+                    <NavLink
+                      to="/blog"
+                      className={({ isActive }) =>
+                        isActive ? "bg-primary w-[100%] block" : ""
+                      }
+                    >
+                      <span className="pl-5 py-3 block">Blog</span>
+                    </NavLink>
                   </li>
+                  {user ? (
+                    <li onClick={logoutFn} className="block text-[18px] py-3 pl-5 font-semibold text-white">
+                      Logout
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </ul>
               </div>
             </div>
