@@ -1,50 +1,17 @@
-import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Link, useParams } from "react-router-dom";
 
-function AddFood() {
-  const navigate = useNavigate();
+function UpdateFood() {
+  const id = useParams();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const onSubmit = data => {
-    const fromData = new FormData();
-    fromData.append("image", data.image[0]);
-
-    const url = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_IMGBB_KEY
-    }`;
-    fetch(url, {
-      method: "POST",
-      body: fromData,
-    })
-      .then(res => res.json())
-      .then(imgData => {
-        const imgUrl = imgData.data.display_url;
-        const { title, price, description } = data;
-        const saveData = {
-          title: title,
-          price: price,
-          description: description,
-          img: imgUrl,
-        };
-        axios.post(`http://localhost:5000/foods`, saveData);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Food Add Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        navigate("/dashboard/all-food");
-      });
+    console.log(data);
   };
-
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -117,4 +84,4 @@ function AddFood() {
   );
 }
 
-export default AddFood;
+export default UpdateFood;

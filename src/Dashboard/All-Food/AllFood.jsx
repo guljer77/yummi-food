@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaPen, FaTrash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 function AllFood() {
+  const [allFood, setAllFood] = useState([]);
+  useEffect(() => {
+    fetch(`http://localhost:5000/foods`)
+      .then(res => res.json())
+      .then(data => {
+        setAllFood(data);
+      });
+  }, []);
+  const foodDelete = id => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this item",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then(result => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:5000/foods/${id}`, {
+          method: "DELETE",
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Food has been deleted.",
+                icon: "success",
+              });
+            }
+          });
+        // Swal.fire({
+        //   title: "Deleted!",
+        //   text: "Your file has been deleted.",
+        //   icon: "success"
+        // });
+      }
+    });
+  };
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -22,35 +63,35 @@ function AllFood() {
               <th>Sl</th>
               <th>Name</th>
               <th>Price</th>
+              <th>Image</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr>
-              <td>1</td>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td className="flex items-center gap-2">
-                <Link className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]"><FaRegEye /></Link>
-                <Link className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]"><FaPen /></Link>
-                <span className="w-[35px] h-[35px] bg-red-600 rounded-sm text-white flex items-center justify-center text-[18px]"><FaTrash /></span>
-              </td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
+            {allFood?.reverse().map((item, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{item?.title}</td>
+                <td>{item?.price}</td>
+                <td>
+                  <img src={item?.img} alt="" className="w-[50px]" />
+                </td>
+                <td className="flex items-center gap-2">
+                  <Link className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]">
+                    <FaRegEye />
+                  </Link>
+                  <Link to={`/dashboard/edit-food/${item?._id}`} className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]">
+                    <FaPen />
+                  </Link>
+                  <span
+                    onClick={() => foodDelete(item?._id)}
+                    className="w-[35px] h-[35px] bg-red-600 rounded-sm text-white flex items-center justify-center text-[18px]"
+                  >
+                    <FaTrash />
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

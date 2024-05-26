@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
 import AllFood from "../Dashboard/All-Food/AllFood";
 import AddFood from './../Dashboard/All-Food/AddFood';
+import UpdateFood from "../Dashboard/All-Food/UpdateFood";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/add-food",
         element: <AddFood />,
+      },
+      {
+        path: "/dashboard/edit-food/:id",
+        element: <UpdateFood />,
       },
     ],
   },
