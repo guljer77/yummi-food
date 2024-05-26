@@ -3,12 +3,13 @@ import Layouts from "../Layouts/Layouts";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
+import Error from "../Pages/ErrorPage/Error";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layouts />,
-    errorElement: "Error Page",
+    errorElement: <Error />,
     children: [
       {
         path: "/",
