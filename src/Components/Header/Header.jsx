@@ -60,7 +60,7 @@ function Header() {
             </div>
           </div>
           {menu && (
-            <div className="z-50 top-0 absolute h-full right-0 bg-gray-900 w-[300px]">
+            <div className="z-50 top-0 fixed h-full right-0 bg-gray-900 w-[300px]">
               <div onClick={()=> setMenu(!menu)} className="flex pb-5 items-center justify-end text-white mt-5 mr-5 text-[26px]">
                 <IoClose />
               </div>
