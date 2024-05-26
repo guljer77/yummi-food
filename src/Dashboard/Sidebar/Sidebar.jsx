@@ -16,7 +16,7 @@ function Sidebar() {
             <NavLink to="/dashboard" className={({isActive})=> isActive ? "bg-gray-100 w-3/4 pl-3 py-[6px] rounded text-primary":""}><span className="flex items-center gap-1"><MdDashboard /> Dashboard</span></NavLink>
           </li>
           <li className="text-[18px] font-medium text-white flex items-center mb-2">
-            <NavLink to="/dashboard/status" className={({isActive})=> isActive ? "bg-gray-100 w-3/4 pl-3 py-[6px] rounded text-primary":""}><span className="flex items-center gap-1"><IoStatsChart />All Food</span></NavLink>
+            <NavLink to="/dashboard/all-food" className={({isActive})=> isActive ? "bg-gray-100 w-3/4 pl-3 py-[6px] rounded text-primary":""}><span className="flex items-center gap-1"><IoStatsChart />All Food</span></NavLink>
           </li>
         </ul>
       </div>

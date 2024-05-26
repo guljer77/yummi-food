@@ -7,6 +7,8 @@ import Error from "../Pages/ErrorPage/Error";
 import DashboardLayouts from "../Layouts/DashboardLayouts";
 import PrivateRoute from "./PrivateRoute";
 import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
+import AllFood from "../Dashboard/All-Food/AllFood";
+import AddFood from './../Dashboard/All-Food/AddFood';
 
 export const router = createBrowserRouter([
   {
@@ -38,7 +40,15 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <DashboardHome />
+        element: <DashboardHome />,
+      },
+      {
+        path: "/dashboard/all-food",
+        element: <AllFood />,
+      },
+      {
+        path: "/dashboard/add-food",
+        element: <AddFood />,
       },
     ],
   },
