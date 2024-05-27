@@ -2,16 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegEye, FaPen, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 function AllFood() {
-  const [allFood, setAllFood] = useState([]);
-  useEffect(() => {
-    fetch(`http://localhost:5000/foods`)
-      .then(res => res.json())
-      .then(data => {
-        setAllFood(data);
-      });
-  }, []);
+  const { data: foods = [], refetch } = useQuery({
+    queryKey: ["foods"],
+    queryFn: async () => {
+      const res = await axios.get("http://localhost:5000/foods");
+      return res.data;
+    },
+  });
   const foodDelete = id => {
     Swal.fire({
       title: "Are you sure?",
@@ -23,24 +25,9 @@ function AllFood() {
       confirmButtonText: "Yes, delete it!",
     }).then(result => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/foods/${id}`, {
-          method: "DELETE",
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Food has been deleted.",
-                icon: "success",
-              });
-            }
-          });
-        // Swal.fire({
-        //   title: "Deleted!",
-        //   text: "Your file has been deleted.",
-        //   icon: "success"
-        // });
+        axios.delete(`http://localhost:5000/foods/${id}`);
+        refetch();
+        toast.warning("Foods Item Deleted");
       }
     });
   };
@@ -68,7 +55,7 @@ function AllFood() {
             </tr>
           </thead>
           <tbody>
-            {allFood?.reverse().map((item, index) => (
+            {foods?.reverse().map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item?.title}</td>
@@ -80,7 +67,10 @@ function AllFood() {
                   <Link className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]">
                     <FaRegEye />
                   </Link>
-                  <Link to={`/dashboard/edit-food/${item?._id}`} className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]">
+                  <Link
+                    to={`/dashboard/edit-food/${item?._id}`}
+                    className="w-[35px] h-[35px] bg-green-500 rounded-sm text-white flex items-center justify-center text-[18px]"
+                  >
                     <FaPen />
                   </Link>
                   <span

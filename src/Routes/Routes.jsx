@@ -8,7 +8,7 @@ import DashboardLayouts from "../Layouts/DashboardLayouts";
 import PrivateRoute from "./PrivateRoute";
 import DashboardHome from "../Dashboard/DashboardHome/DashboardHome";
 import AllFood from "../Dashboard/All-Food/AllFood";
-import AddFood from './../Dashboard/All-Food/AddFood';
+import AddFood from "./../Dashboard/All-Food/AddFood";
 import UpdateFood from "../Dashboard/All-Food/UpdateFood";
 
 export const router = createBrowserRouter([
@@ -54,6 +54,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/edit-food/:id",
         element: <UpdateFood />,
+        loader: ({params}) => fetch(`http://localhost:5000/foods/${params?.id}`)
       },
     ],
   },

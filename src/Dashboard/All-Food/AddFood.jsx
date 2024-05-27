@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 function AddFood() {
   const navigate = useNavigate();
@@ -34,13 +34,7 @@ function AddFood() {
           img: imgUrl,
         };
         axios.post(`http://localhost:5000/foods`, saveData);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Food Add Successfully",
-          showConfirmButton: false,
-          timer: 1500
-        });
+        toast.success("Food Add Successfully")
         navigate("/dashboard/all-food");
       });
   };
